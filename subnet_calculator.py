@@ -91,7 +91,6 @@ def subnet_calc():
 		for each_octet in net_ip_octets:
 			net_ip_address.append(str(int(each_octet,2)))
 		network_address=".".join(net_ip_address)
-		print network_address
 
 		#split broadcast address to readable ips
 		bst_ip_octets=[]
@@ -111,6 +110,29 @@ def subnet_calc():
 		print "Wildcark mask: %s"%wildcard_mask
 		print "Mask bits: %s"%no_of_ones
 		print "\n"
+		while True:
+			generate=raw_input("Generate random ip address form subnet(y/n)")
+
+			if generate=="y":
+				generated_ip=[]
+
+				#Obtain  random ip
+				for indexb, oct_bst in enumerate(bst_ip_address):
+					for indexn,oct_net in enumerate(net_ip_address):
+						if indexb==indexn:
+							if oct_bst==oct_net:
+								#add identical octets to the generate ip list
+								generated_ip.append(oct_bst)
+							else:
+								#generate random number(s) from within the octet intervals
+								generated_ip.append(str(random.randint(int(oct_net),int(oct_bst))))
+				random_ip=".".join(generated_ip)
+				print "Random IP address is: %s"%random_ip
+				print "\n"
+				continue
+			else:
+				print "Exiting..\n"
+				break
 
 	except KeyboardInterrupt:
 		print "\nProgram aborted by user. Exiting...\n"
